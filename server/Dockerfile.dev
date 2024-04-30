@@ -1,0 +1,6 @@
+FROM node:hydrogen-alpine
+COPY . /app
+WORKDIR /app
+RUN apk add qpdf
+RUN npm ci
+ENTRYPOINT [ "npm", "run", "start:debug" ]
