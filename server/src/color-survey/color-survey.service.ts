@@ -1,6 +1,6 @@
 import { FindCorlorSurveyQueryString } from './dto/find-color-survey.query-string';
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
+import { Transactional } from 'libs/database';
 import { CreateCorlorSurveyRequestDto } from 'src/color-survey/dto/create-color-survey.request.dto';
 import { ColorSurveyEntity } from 'src/entities/color-survey';
 import { Repository } from 'typeorm';
@@ -16,10 +16,11 @@ interface TransformedColorSurvey {
 @Injectable()
 export class ColorSurveyService {
   constructor(
-    @InjectRepository(ColorSurveyEntity)
+    @Inject('COLOR_REPOSITORY')
     private colorSurveyRepository: Repository<ColorSurveyEntity>,
   ) {}
 
+  @Transactional()
   async create(dto: CreateCorlorSurveyRequestDto): Promise<void> {
     const colorSurvey = await this.colorSurveyRepository.create(dto);
     await this.colorSurveyRepository.save(colorSurvey);

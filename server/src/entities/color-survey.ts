@@ -10,6 +10,7 @@ import {
 export class ColorSurveyEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
+
   @Column()
   colorCode: string;
 
